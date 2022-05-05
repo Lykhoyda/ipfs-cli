@@ -5,6 +5,6 @@
     "prettier"
   ],
   "rules": {
-
+    "unicorn/filename-case": "warn"
   }
 }

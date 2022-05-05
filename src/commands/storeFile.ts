@@ -1,24 +1,43 @@
-import { Command, Flags } from '@oclif/core';
+require('dotenv').config();
+import { contract } from '../utils/web3Client';
+import { CID } from 'ipfs-http-client';
+import { Command } from '@oclif/core';
+import { readFileSync } from 'node:fs';
+import ipfsClient from '../utils/ipfsClient';
 
 export default class StoreFile extends Command {
-  static flags = {
-    // flag with a value (-n, --name=VALUE)
-    name: Flags.string({ char: 'n', description: 'name to print' }),
-    // flag with no value (-f, --force)
-    force: Flags.boolean({ char: 'f' })
-  };
+  static description = 'Store file on IPFS and Ethereum Contract';
+  static args = [{ name: 'fileSrc', description: '', required: true }];
 
-  static args = [{ name: 'file' }];
+  static async storeFile(fileSrc: string): Promise<CID> {
+    const file = readFileSync(fileSrc).buffer;
+    try {
+      const { cid } = await ipfsClient.add(file);
+      console.log('Your file stored on IPFS:', `https://ipfs.infura.io/ipfs/${cid}`);
+      return cid;
+    } catch (err) {
+      throw Error('Failed to store the file on IPFS network')
+    }
+  }
+
+  static async storeCidOnEth(cid: CID) {
+    await contract.methods
+      .store(cid)
+      .send({
+        from: process.env.PUBLIC_KEY
+      })
+      .on('receipt', (data: any) => {
+          console.log('The file stored using Smart Contract')
+          console.log('BlockHash', data.blockHash);
+          console.log('transactionHash', data.transactionHash);
+        }
+      );
+  }
 
   public async run(): Promise<void> {
-    const { args, flags } = await this.parse(StoreFile);
-
-    const name = flags.name ?? 'world';
-    this.log(
-      `hello ${name} from /Users/antonlykhoyda/WebstormProjects/typescript/ipfs-cli/src/commands/storeFile.ts`
-    );
-    if (args.file && flags.force) {
-      this.log(`you input --force and --file: ${args.file}`);
-    }
+    const { args } = await this.parse(StoreFile);
+    const cid = await StoreFile.storeFile(args.fileSrc);
+    await StoreFile.storeCidOnEth(cid);
+    process.exit()
   }
 }

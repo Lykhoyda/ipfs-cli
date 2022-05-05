@@ -61,10 +61,10 @@ DESCRIPTION
 
 EXAMPLES
   $ oex hello friend --from oclif
-  hello friend from oclif! (./src/commands/hello/index.ts)
+  hello friend from oclif! (./src/commands/hello/storeFile.ts)
 ```
 
-_See code: [dist/commands/hello/index.ts](https://github.com/lykhoyda/ipfs-cli/blob/v0.0.0/dist/commands/hello/index.ts)_
+_See code: [dist/commands/hello/storeFile.ts](https://github.com/lykhoyda/ipfs-cli/blob/v0.0.0/dist/commands/hello/index.ts)_
 
 ## `ipfs-cli hello world`
 
