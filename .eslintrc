@@ -5,6 +5,8 @@
     "prettier"
   ],
   "rules": {
-    "unicorn/filename-case": "warn"
+    "unicorn/filename-case": "warn",
+    "unicorn/no-process-exit": "off",
+    "no-process-exit": "off"
   }
 }

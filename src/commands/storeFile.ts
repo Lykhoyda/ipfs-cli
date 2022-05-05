@@ -1,3 +1,4 @@
+import { TransactionReceipt } from '../types/contract';
 require('dotenv').config();
 import { contract } from '../utils/web3Client';
 import { CID } from 'ipfs-http-client';
@@ -15,29 +16,28 @@ export default class StoreFile extends Command {
       const { cid } = await ipfsClient.add(file);
       console.log('Your file stored on IPFS:', `https://ipfs.infura.io/ipfs/${cid}`);
       return cid;
-    } catch (err) {
-      throw Error('Failed to store the file on IPFS network')
+    } catch {
+      throw new Error('Failed to store the file on IPFS network');
     }
   }
 
-  static async storeCidOnEth(cid: CID) {
+  static async storeCidOnEth(cid: CID): Promise<void> {
     await contract.methods
       .store(cid)
       .send({
         from: process.env.PUBLIC_KEY
       })
-      .on('receipt', (data: any) => {
-          console.log('The file stored using Smart Contract')
-          console.log('BlockHash', data.blockHash);
-          console.log('transactionHash', data.transactionHash);
-        }
-      );
+      .on('receipt', (data: TransactionReceipt) => {
+        console.log('The file stored using Smart Contract');
+        console.log('BlockHash', data.blockHash);
+        console.log('transactionHash', data.transactionHash);
+      });
   }
 
   public async run(): Promise<void> {
     const { args } = await this.parse(StoreFile);
     const cid = await StoreFile.storeFile(args.fileSrc);
     await StoreFile.storeCidOnEth(cid);
-    process.exit()
+    process.exit();
   }
 }

@@ -1,6 +1,6 @@
 import Web3 from 'web3';
 import { AbiItem } from 'web3-utils';
-import ABI from '../build/contracts/StoreCID.json';
+import ABI from '../contracts/StoreCID.json';
 import { ContractEvents, ContractMethod } from '../types/contract';
 import { CustomWeb3Contract } from 'web3-eth-contract';
 
