@@ -12,7 +12,7 @@ export default class ListAllCid extends Command {
     }
   ];
 
-  static async getCidEventsByAddress(address: string) {
+  static async getCidEventsByAddress(address: string): Promise<void> {
     try {
       web3.utils.toChecksumAddress(address);
     } catch {
