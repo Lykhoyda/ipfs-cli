@@ -19,7 +19,7 @@ $ yarn run build
 $ yarn run test
 ```
 
-Before running the commands we need to provide the credential data to connect to IPFS network using Infura and User public key + mnemonic to be able to sign the transaction during the CID transaction.
+Before running the commands we need to provide the credential data to connect to IPFS network using Infura and User credentials (public key + mnemonic) to be able to sign the Smart Cotract transaction.
 
 1. Create .env file
 2. Fill in the missing credential data
