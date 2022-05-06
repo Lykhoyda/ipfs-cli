@@ -16,7 +16,8 @@ Project Setup
 ```sh-session
 $ yarn install
 $ yarn run build
-$ yarn run test (.env should be present)
+// .env should be present to run the tests
+$ yarn run test
 ```
 
 Before running the commands we need to provide the credential data to connect to IPFS network using Infura and User credentials (public key + mnemonic) to be able to sign the Smart Cotract transaction.
