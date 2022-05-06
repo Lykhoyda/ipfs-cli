@@ -50,7 +50,7 @@ For local run instead of cli name we have to add `./bin/run`
 
 ## `ipfs-cli storeFile fileSrc`
 
-Store the file to IPFS and provide the CID to smart contract
+Store the file to IPFS and provide the CID to the smart contract(https://goerli.etherscan.io/address/0x7Eb45FC38fc4E920fa124783eccc5765E1711Df3#code)
 
 ```
 USAGE
@@ -67,7 +67,7 @@ _See code: [dist/commands/storeFile.ts](https://github.com/Lykhoyda/ipfs-cli/blo
 
 ## `ipfs-cli listAllCid address`
 
-List all CID events stored on Smart Contract associated with address
+List all CID events stored on Smart Contract associated with the address
 
 ```
 USAGE
